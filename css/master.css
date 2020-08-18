@@ -1,0 +1,106 @@
+*{
+  --bg-color: #e7e7e7;
+  --container-color: #e9e9e9;
+  --primary: #282828;
+  --secundary: #404040;
+  color: var(--primary);
+}
+
+html, body{
+  height: 100%;
+  margin: 0px;
+}
+
+.debug{
+  background-color: red;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {}
+
+body{
+  background-image: url("../img/pattern.png");
+  background-repeat: repeat;
+}
+
+.logo img{
+  height: 7vh;
+}
+
+.logo{
+  background-image: url("../img/logo.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40vh;
+}
+
+#portfolio{
+  margin-top: 5vh;
+  margin-bottom: 2vh;
+
+  padding-top: 1vh;
+  padding-bottom: 2vh;
+}
+
+.port-item{
+  display: block;
+  margin: 1vh;
+  width:100%;
+  /* height:100px; */
+  /* background-color:red; */
+}
+
+.badge{
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+hr{
+  border-color: rgba(0,0,0,.2);
+  border-style: solid none;
+  border-width: 0px 0;
+  border-top-width: 1px;
+  margin: 20px 0;
+}
+
+.port-title{
+  font-size: 28px;
+}
+
+.port-description{
+  overflow-wrap: break-word;
+  color: var(--secundary) !important;
+}
+
+.footer{
+  padding-left: 3vw;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  background-color: var(--primary);
+}
+
+.footer-text{
+  color: var(--bg-color);
+}
+
+.container{
+  background-color: var(--container-color);
+}
+
+.page{
+  height: 100vh;
+}
+
+.transparent{
+  background-color: transparent !important;
+}
