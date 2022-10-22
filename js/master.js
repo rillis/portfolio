@@ -65,7 +65,7 @@ function addToRibbon(item){
 
 
 function updateRepos(){
-  $.getJSON('https://api.github.com/users/rillis/repos', function(data) {
+  $.getJSON('https://api.github.com/users/rillis/repos?per_page=100&sort=created', function(data) {
     console.log(Object.keys(data));
     data.forEach(addToPortfolio);
 
