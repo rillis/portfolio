@@ -142,3 +142,16 @@ hr{
 .btn-ribbons span{
   color: #e7e7e7;
 }
+
+#languageRibbon{
+  height: 50px;
+  max-width: 100%;
+  overflow: scroll; /* Allow scroll */
+  overflow-y: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+  /* background-color: red; */
+}
+
+.item-title{
+}

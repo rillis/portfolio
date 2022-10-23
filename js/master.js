@@ -52,10 +52,10 @@ function addToPortfolio(item){
     languages.push(lang);
   }
 
-  var languageStr = "<span style='margin-left:10px;font-size:21px;color:"+colors[lang]["color"]+"'>⬤</span><span class='badge badge-pill badge-light' style='margin-left:5px;'>"+lang+"</span>";
+  var languageStr = "<span style='font-size:19px;color:"+colors[lang]["color"]+"'>⬤</span><span class='badge badge-pill badge-light' style='margin-left:5px;'>"+lang+"</span>";
 
   if(languagesSelected.includes(lang) || Object.keys(languagesSelected).length == 0 ){
-    portfolio.innerHTML += "<div class='d-flex flex-column port-item'><div class='d-flex align-items-center port-title'>"+name+" "+languageStr+"</div><span class='port-description'>"+desc+"</span><a href='https://github.com/rillis/"+name+"' target='_blank'>Source</a></div><hr>";
+    portfolio.innerHTML += "<div class='d-flex flex-column port-item'><div class='d-flex align-items-center port-title item-title'>"+name+" </div><div>"+languageStr+"</div><span class='port-description'>"+desc+"</span><a href='https://github.com/rillis/"+name+"' target='_blank'>Source</a></div><hr>";
   }
 }
 
