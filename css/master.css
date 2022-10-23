@@ -11,18 +11,6 @@ html, body{
   margin: 0px;
 }
 
-#back{
-  margin:40vh;
-  text-decoration: none;
-  color: black;
-  font-size: 21px;
-  font-family: Century Gothic;
-}
-
-#back span{
-  font-weight: bold;
-}
-
 .debug{
   background-color: red;
 }
@@ -123,3 +111,34 @@ hr{
 .ribbon-badge { cursor: pointer; }
 .enabled {background-color:#f8f9fa;color:#212529;}
 .disabled {background-color:#cccccc;color:#212529;}
+
+
+@font-face {
+    font-family: 'CaviarDreams';
+    src: url('fonts/CaviarDreams.ttf') format('truetype');
+}
+
+.btn-ribbons{
+  margin-left:2vw;
+
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #282828;
+  color: #e7e7e7;
+  font-size: 19px;
+  font-family: CaviarDreams;
+}
+
+.btn-ribbons a{
+  text-decoration: none;
+  color: #e7e7e7;
+}
+
+.btn-ribbons a:hover{
+  color: #ffffff;
+}
+
+.btn-ribbons span{
+  color: #e7e7e7;
+}
