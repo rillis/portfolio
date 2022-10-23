@@ -40,6 +40,11 @@ function addToPortfolio(item){
   var name = item["name"];
   var lang = item["language"];
   var desc = item["description"];
+
+  if(lang == null){
+    lang = "Markdown";
+  }
+
   if(desc==null){
     desc="";
   }
@@ -66,6 +71,7 @@ function addToRibbon(item){
 
 function updateRepos(){
   $.getJSON('https://api.github.com/users/rillis/repos?per_page=100&sort=created', function(data) {
+
     console.log(Object.keys(data));
     data.forEach(addToPortfolio);
 
