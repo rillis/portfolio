@@ -1,103 +1,137 @@
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
+let languages = [];
+let languagesSelected = [];
+let colors = {};
+let reposData = [];
 
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
+// Controle de toggle dos filtros
+function langua(l) {
+    let lsLen = languagesSelected.length;
+    let lLen = languages.length;
+
+    if (lsLen === lLen) {
+        languagesSelected = [l];
+    } else {
+        if (!languagesSelected.includes(l)) {
+            languagesSelected.push(l);
+        } else {
+            const index = languagesSelected.indexOf(l);
+            if (index > -1) {
+                languagesSelected.splice(index, 1);
+            }
+        }
+    }
+    
+    if (languagesSelected.length === 0) {
+        languagesSelected = [...languages];
+    }
+    
+    renderView();
+}
+
+// Renderiza o DOM
+function renderView() {
+    const portfolio = document.getElementById('portfolio');
+    
+    // Renderiza Ribbon (Filtros)
+    let html = `
+        <div class="mb-10">
+            <h2 class="text-sm uppercase tracking-wider text-gray-400 mb-4 font-semibold">Filtros por Linguagem</h2>
+            <div class="flex flex-wrap gap-2" id="languageRibbon">
+    `;
+
+    languages.forEach(item => {
+        const isActive = languagesSelected.includes(item);
+        const colorCode = colors[item] ? colors[item].color : '#ccc';
+        
+        const baseClasses = "flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors cursor-pointer border select-none";
+        const activeClasses = isActive 
+            ? "bg-gray-800 border-gray-600 text-gray-100 shadow-sm" 
+            : "bg-gray-900 border-gray-800 text-gray-500 hover:border-gray-700 hover:text-gray-300 opacity-60";
+
+        html += `
+            <span class="${baseClasses} ${activeClasses}" onclick="langua('${item}')">
+                <span class="w-3 h-3 rounded-full" style="background-color: ${colorCode}"></span>
+                ${item}
+            </span>
+        `;
     });
-});
 
-var languages = [];
-var languagesSelected = [];
-var colors = {};
+    html += `</div></div>`;
 
-function langua(l){
-  var lsLen = Object.keys(languagesSelected).length;
-  var lLen = Object.keys(languages).length;
-  if(lsLen == lLen){
-    languagesSelected = [];
-    languagesSelected.push(l);
+    // Renderiza Cards
+    html += `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">`;
+
+    reposData.forEach(item => {
+        // Validação da linguagem nula para Markdown
+        let lang = item.language;
+        if (!lang) {
+            lang = "Markdown";
+        }
+
+        if (languagesSelected.includes(lang) || languagesSelected.length === 0) {
+            const name = item.name;
+            const desc = item.description || "Sem descrição disponível.";
+            const url = item.html_url;
+            const colorCode = colors[lang] ? colors[lang].color : '#888';
+
+            html += `
+                <a href="${url}" target="_blank" rel="noopener noreferrer" class="block group h-full">
+                    <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-lg flex flex-col justify-between h-full transition-all duration-200 hover:-translate-y-1 hover:border-blue-500 hover:shadow-blue-500/20">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-100 group-hover:text-blue-400 transition-colors mb-2 break-words">
+                                ${name}
+                            </h3>
+                            <p class="text-sm text-gray-400 mb-4 line-clamp-3">
+                                ${desc}
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-700/50">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full shadow-sm" style="background-color: ${colorCode}"></span>
+                                <span class="text-xs text-gray-300 font-medium">${lang}</span>
+                            </div>
+                            <span class="text-xs font-semibold text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity">Source ↗</span>
+                        </div>
+                    </div>
+                </a>
+            `;
+        }
+    });
+
+    html += `</div>`;
+    portfolio.innerHTML = html;
+}
+
+// Fetch dos dados (sem jQuery)
+async function update() {
+    try {
+        const [colorsResponse, reposResponse] = await Promise.all([
+            fetch("https://raw.githubusercontent.com/ozh/github-colors/master/colors.json"),
+            fetch("https://api.github.com/users/rillis/repos?per_page=100&sort=created")
+        ]);
+
+        colors = await colorsResponse.json();
+        reposData = await reposResponse.json();
+
+        // Extrai linguagens únicas
+        reposData.forEach(item => {
+            let lang = item.language;
+            if (!lang) {
+                lang = "Markdown";
+            }
+            if (!languages.includes(lang)) {
+                languages.push(lang);
+            }
+        });
+        
+        languagesSelected = [...languages];
+        renderView();
+
+    } catch (error) {
+        console.error("Falha ao carregar dados da API:", error);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
     update();
-  }else{
-    if(!languagesSelected.includes(l)){
-      languagesSelected.push(l);
-      update();
-    }else{
-      const index = languagesSelected.indexOf(l);
-      if (index > -1) { // only splice array when item is found
-        languagesSelected.splice(index, 1); // 2nd parameter means remove one item only
-      }
-      update();
-    }
-  }
-  console.log(l);
-}
-
-function addToPortfolio(item){
-  var portfolio = document.getElementById('portfolio');
-
-  var name = item["name"];
-  var lang = item["language"];
-  var desc = item["description"];
-
-  if(lang == null){
-    lang = "Markdown";
-  }
-
-  if(desc==null){
-    desc="";
-  }
-  if(!languages.includes(lang)){
-    languages.push(lang);
-  }
-
-  var languageStr = "<span style='font-size:19px;color:"+colors[lang]["color"]+"'>⬤</span><span class='badge badge-pill badge-light' style='margin-left:5px;'>"+lang+"</span>";
-
-  if(languagesSelected.includes(lang) || Object.keys(languagesSelected).length == 0 ){
-    portfolio.innerHTML += "<div class='d-flex flex-column port-item'><div class='d-flex align-items-center port-title item-title'>"+name+" </div><div>"+languageStr+"</div><span class='port-description'>"+desc+"</span><a href='https://github.com/rillis/"+name+"' target='_blank'>Source</a></div><hr>";
-  }
-}
-
-function addToRibbon(item){
-    var ribbon = document.getElementById('languageRibbon');
-    if(!languagesSelected.includes(item)){
-      ribbon.innerHTML += "<span class='badge badge-pill badge-light ribbon-badge disabled' style='margin-left:5px;' onClick='langua(&quot;"+item+"&quot;);'><span style='font-size:15px;margin-right:10px;color:"+colors[item]["color"]+"'>⬤</span>"+item+"</span>";
-    }else{
-      ribbon.innerHTML += "<span class='badge badge-pill badge-light ribbon-badge enabled' style='margin-left:5px;' onClick='langua(&quot;"+item+"&quot;);'><span style='font-size:15px;margin-right:10px;color:"+colors[item]["color"]+"'>⬤</span>"+item+"</span>";
-    }
-}
-
-
-function updateRepos(){
-  $.getJSON('https://api.github.com/users/rillis/repos?per_page=100&sort=created', function(data) {
-
-    console.log(Object.keys(data));
-    data.forEach(addToPortfolio);
-
-    if(Object.keys(languagesSelected).length == 0){
-      languagesSelected = languages;
-    }
-    languages.forEach(addToRibbon);
-
-  }).fail(function(jqXHR) {
-      console.log("fail github");
-  });
-}
-
-function update(){
-
-  $.getJSON("https://raw.githubusercontent.com/ozh/github-colors/master/colors.json", function(data) {
-    var portfolio = document.getElementById('portfolio');
-    portfolio.innerHTML = '<h5>Filters:</h5><div class="d-flex align-items-center port-title" id="languageRibbon"> </div><hr>';
-    console.log(Object.keys(data));
-    colors = data;
-    updateRepos();
-  }).fail(function(jqXHR) {
-      console.log("fail colors");
-  });
-}
-
-$( document ).ready(function() {
-  update();
 });
