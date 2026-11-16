@@ -11,7 +11,7 @@
     { name: "minesweeper", text: "Campo minado em Java." },
     { name: "shared-clipboard" },
     { name: "aps6-facerecognition" },
-    { name: "JLol" }
+    { name: "includeplus" }
   ];
 
   // Repositórios que não aparecem na lista (ex.: o README do perfil)
