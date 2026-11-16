@@ -157,8 +157,27 @@ h1 em { font-style: italic; color: var(--accent); }
 .stat b { display: block; font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 4vw, 44px); line-height: 1; }
 .stat span { font-family: var(--mono); font-size: 12px; color: var(--muted); }
 
-.langbar { display: flex; height: 6px; border-radius: 3px; overflow: hidden; margin-top: 20px; gap: 2px; }
-.langbar i { display: block; height: 100%; min-width: 2px; }
+.langbar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; margin-top: 20px; gap: 2px; }
+.langbar i { display: block; height: 100%; min-width: 3px; cursor: default; transition: opacity .2s; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 12px; }
+.legend button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 2px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: opacity .2s, color .2s;
+}
+.legend .n { color: var(--faint); }
+.langs.hl .langbar i:not(.on), .langs.hl .legend button:not(.on) { opacity: .25; }
+.langs .legend button.on { color: var(--text); }
 
 /* ---------- section titles ---------- */
 .section { padding: 48px 0 16px; }

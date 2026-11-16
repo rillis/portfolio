@@ -95,8 +95,14 @@
     $("s-last").textContent = ago(last);
     $("s-last").parentNode.title = new Date(last).toLocaleString("pt-BR");
 
+    var pct = function (l) { return Math.round(counts[l] / repos.length * 100); };
     $("langbar").innerHTML = langs.map(function (l) {
-      return '<i style="flex:' + counts[l] + ';background:' + color(l) + '" title="' + esc(l) + " · " + counts[l] + '"></i>';
+      return '<i data-lang="' + esc(l) + '" style="flex:' + counts[l] + ';background:' + color(l) + '" title="' +
+        esc(l) + " · " + counts[l] + " repos (" + pct(l) + '%)"></i>';
+    }).join("");
+    $("legend").innerHTML = langs.map(function (l) {
+      return '<button type="button" data-lang="' + esc(l) + '" title="Filtrar ' + esc(l) + ' no arquivo"><span class="dot" style="background:' +
+        color(l) + '"></span>' + esc(l) + ' <span class="n">' + (pct(l) || "<1") + "%</span></button>";
     }).join("");
 
     $("chips").innerHTML =
@@ -193,6 +199,26 @@
     state.sort = b.dataset.sort;
     Array.prototype.forEach.call(this.children, function (c) { c.setAttribute("aria-pressed", String(c === b)); });
     renderList();
+  });
+
+  // Barra de linguagens: destaque ao passar o mouse e clique para filtrar
+  function highlight(lang) {
+    var box = $("langs");
+    box.classList.toggle("hl", !!lang);
+    Array.prototype.forEach.call(box.querySelectorAll("[data-lang]"), function (el) {
+      el.classList.toggle("on", el.dataset.lang === lang);
+    });
+  }
+  $("langs").addEventListener("mouseover", function (e) {
+    var el = e.target.closest("[data-lang]");
+    highlight(el ? el.dataset.lang : null);
+  });
+  $("langs").addEventListener("mouseleave", function () { highlight(null); });
+  $("legend").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-lang]");
+    if (!b) return;
+    var chip = $("chips").querySelector('.chip[data-lang="' + CSS.escape(b.dataset.lang) + '"]');
+    if (chip) { chip.click(); $("arquivo").scrollIntoView({ behavior: "smooth" }); }
   });
 
   $("q").addEventListener("input", function () { state.q = this.value; renderList(); });
