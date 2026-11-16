@@ -1,43 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Página não encontrada</title>
-    <script src="js/tailwind.js"></script>
-    <link rel="icon" type="image/x-icon" href="img/favicon2.ico">
-</head>
-<body class="bg-gray-900 text-gray-100 min-h-screen flex items-center justify-center font-sans selection:bg-blue-500 selection:text-white">
-
-    <div class="text-center px-6">
-        
-        <!-- Bloco do 404 -->
-        <div class="flex items-center justify-center gap-2 md:gap-6 text-8xl md:text-[12rem] font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 select-none">
-            <span>4</span>
-            
-            <!-- Ícone de interrogação em SVG girando -->
-            <svg class="w-20 h-20 md:w-40 md:h-40 animate-spin text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
-            </svg>
-            
-            <span>4</span>
-        </div>
-
-        <!-- Mensagem e Link -->
-        <div class="mt-8 text-lg md:text-2xl text-gray-400 font-light">
-            <p>Essa página não existe. Será que um dia ela existiu?</p>
-            <p class="mt-4">
-                Volte para a 
-                <a href="https://www.rillis.com.br/" class="text-blue-400 hover:text-emerald-400 transition-colors font-medium hover:underline decoration-2 underline-offset-4">
-                    home
-                </a> 
-                para continuar.
-            </p>
-        </div>
-
-    </div>
-
-</body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>404 · Rillis</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon2.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <script>
+      try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+    </script>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <span>erro 404</span>
+    </header>
+    <main class="wrap notfound fade">
+      <p class="eyebrow">// página não encontrada</p>
+      <h1>4<em>0</em>4</h1>
+      <p>Essa página não existe. Será que um dia ela existiu?</p>
+      <p>Volte para o <a class="back-link" href="https://portfolio.rillis.com.br/">portfólio</a> ou para a <a class="back-link" href="https://rillis.com.br/">home</a>.</p>
+    </main>
+  </body>
 </html>
